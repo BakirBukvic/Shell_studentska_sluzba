@@ -9,26 +9,26 @@ declare -a prosjek=("6" "10")
 login(){
     lista=("user1,password1" "user2,password2")
 
-    read -p "Unesite username: " username
-    read -p "Unesite password" sifra
-
     tacna=false
 
-    for user in "${lista[@]}";do
-        IFS=',' read -r _username _sifra <<< "$user"
-        if [ "$_username" == "$username" ] && [ "$_sifra" == "$sifra" ]; then
-        tacna=true
-        break
-        else
-        continue
-        fi
-        done
-        if [ "$tacna" == false ]; then
-        echo Netacna lozinka
-        else
-        echo Dobrodosli
-        fi
+    while [ "$tacna" == false ]; do
+        read -p "Unesite username: " username
+        read -p "Unesite password: " sifra
 
+        for user in "${lista[@]}"; do
+            IFS=',' read -r _username _sifra <<< "$user"
+            if [ "$_username" == "$username" ] && [ "$_sifra" == "$sifra" ]; then
+                tacna=true
+                break
+            fi
+        done
+
+        if [ "$tacna" == false ]; then
+            echo Netacna lozinka
+        fi
+    done
+
+    echo Dobrodosli
 }
 
 
@@ -299,5 +299,5 @@ deleteStudent(){
 
 
 
-
+login
 admin_menu
